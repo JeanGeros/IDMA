@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.apitest import webhook
-
+from api.apitest import webhook, class_progress
+from api import views
 
 from django.urls import path, include
 from django.contrib.auth.models import User
@@ -44,5 +44,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('webhook', webhook),
+    path('prueba/', views.Prueba, name="prueba"),
+    path('class_progress', class_progress),
+
+    
 
 ]

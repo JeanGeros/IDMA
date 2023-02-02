@@ -67,7 +67,7 @@ def class_progress(request):
                     position = val_list.index(100)
                     print(key_list[position])
 
-                    # for exam in text['detail']:
+                    # for exam in text['detail']:s
                     #     if exam['examTries'] != None:
                     #         exam_list.append(exam['percent'])
 

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api.apitest import webhook, class_progress, query
+from api.apitest import *
 from api import views
 
 from django.urls import path, include
@@ -47,6 +47,15 @@ urlpatterns = [
     path('prueba/', views.Prueba, name="prueba"),
     path('class_progress', class_progress),
     path('query', query),
+    path('course_creation', course_creation),
+    path('assign_automatic', assign_automatic),
+    path('assign_creater', assign_creater),
+
+
+
+
+
+
 
     
 

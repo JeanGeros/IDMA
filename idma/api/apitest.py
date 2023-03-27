@@ -15,14 +15,12 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 from selenium.webdriver.support.ui import Select
 
-from ast import literal_eval
-
 @csrf_exempt
 def webhook(request):
     # Nombre de sesiones ['TICS','MATEMATICAS','EX.ORAL  Y ESCRITA','BIOLOGIA','QUIMICA','FISICA']
     sessions_id = {'MATEMATICAS': 165966, 'EX.  ORAL Y ESCRITA': 165965, 'QUIMICA': 165964, 'TICS': 165963, 'FISICA': 165962, 'BIOLOGIA': 165961, 'GENERO': 173272}
     # token_oficina 
-    token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGFzc29ubGl2ZSIsImRhdGEiOiJ7XCJlbWFpbFwiOlwiaWRtYS5jbGFzc29ubGl2ZUBpZG1hLmNsXCIsXCJpcFwiOlwiMjAwLjU0LjM2LjIyNVwifSJ9.UdfJWxV05uzFxILwNCLF4eFj8jIVxfP7MfB417gZDIw'
+    token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGFzc29ubGl2ZSIsImRhdGEiOiJ7XCJlbWFpbFwiOlwiaWRtYS5jbGFzc29ubGl2ZUBpZG1hLmNsXCIsXCJpcFwiOlwiMTkwLjExNC4zNS4xNlwifSJ9.s55cKx9dGF4yI3P5Le0KevDLX5GEVVruyKbU5uGRH3M'
 
     list_response = []
     if request.method == 'POST':
@@ -48,7 +46,7 @@ def webhook(request):
 @csrf_exempt
 def class_progress(request):
     sessions_id = {'MATEMATICAS': 165966, 'EX.  ORAL Y ESCRITA': 165965, 'QUIMICA': 165964, 'TICS': 165963, 'FISICA': 165962, 'BIOLOGIA': 165961, 'GENERO': 173272}
-    token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGFzc29ubGl2ZSIsImRhdGEiOiJ7XCJlbWFpbFwiOlwiaWRtYS5jbGFzc29ubGl2ZUBpZG1hLmNsXCIsXCJpcFwiOlwiMjAwLjU0LjM2LjIyNVwifSJ9.UdfJWxV05uzFxILwNCLF4eFj8jIVxfP7MfB417gZDIw'
+    token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGFzc29ubGl2ZSIsImRhdGEiOiJ7XCJlbWFpbFwiOlwiaWRtYS5jbGFzc29ubGl2ZUBpZG1hLmNsXCIsXCJpcFwiOlwiMTkwLjExNC4zNS4xNlwifSJ9.s55cKx9dGF4yI3P5Le0KevDLX5GEVVruyKbU5uGRH3M'
 
     if request.method == 'POST':
         datas = request.body
@@ -200,14 +198,15 @@ def assign_automatic(request):
 def assign_creater(request):
     if request.method == 'GET':
         start = request.GET.get('start', None)
-        end = request.GET.get('end', None)
+        teacher = request.GET.get('teacher', None)
+        courses = json.loads(teacher)
 
         start = int(start)
-        end = int(end)
 
         print("----------------------------------------")
         print(start)
         print(end)
+        print(teacher)
         print("----------------------------------------")
 
 
@@ -224,14 +223,22 @@ def assign_creater(request):
         driver.get(f"https://www.classonlive.com/zona-privada/Cursos-que-Imparto")
         time.sleep(2)
 
+        while start > int(end)-1:
+            print(start)
+            driver.execute_script("window.scrollBy(0,document.body.scrollHeight)")
+            time.sleep(1)
 
-        while start < int(end):
+
             driver.find_element(By.XPATH, f"/html/body/div[5]/div[4]/div[1]/div[3]/section/div/div[2]/div/table/tbody/tr[{start}]/td[9]/div/button").click()
-            time.sleep(2)
+            time.sleep(1)
             driver.find_element(By.XPATH, f"/html/body/div[5]/div[4]/div[1]/div[3]/section/div/div[2]/div/table/tbody/tr[{start}]/td[9]/div/ul/li[13]/a").click()
-            select_driver = Select(driver.find_element_by_xpath('xpath_of_element'))
-            select_driver.select_by_visible_text('Banana')
-            start += 1
+            time.sleep(2)
+            select_driver = Select(driver.find_element(By.XPATH, f"/html/body/div[5]/div[4]/div[22]/div/div/div[2]/div/div/div/div/select"))
+            select_driver.select_by_visible_text(f"{teacher}")
+            time.sleep(1)
+            driver.find_element(By.XPATH, f"/html/body/div[5]/div[4]/div[22]/div/div/div[3]/div[2]/button[1]").click()
+            time.sleep(12)
+            start -= 1
 
         return HttpResponse("uwu")
 

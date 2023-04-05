@@ -20,7 +20,7 @@ def webhook(request):
     # Nombre de sesiones ['TICS','MATEMATICAS','EX.ORAL  Y ESCRITA','BIOLOGIA','QUIMICA','FISICA']
     sessions_id = {'MATEMATICAS': 165966, 'EX.  ORAL Y ESCRITA': 165965, 'QUIMICA': 165964, 'TICS': 165963, 'FISICA': 165962, 'BIOLOGIA': 165961, 'GENERO': 173272}
     # token_oficina 
-    token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGFzc29ubGl2ZSIsImRhdGEiOiJ7XCJlbWFpbFwiOlwiaWRtYS5jbGFzc29ubGl2ZUBpZG1hLmNsXCIsXCJpcFwiOlwiMTkwLjExNC4zNS4xNlwifSJ9.s55cKx9dGF4yI3P5Le0KevDLX5GEVVruyKbU5uGRH3M'
+    token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGFzc29ubGl2ZSIsImRhdGEiOiJ7XCJlbWFpbFwiOlwiaWRtYS5jbGFzc29ubGl2ZUBpZG1hLmNsXCIsXCJpcFwiOlwiMjAwLjU0LjM2LjIyNVwifSJ9.UdfJWxV05uzFxILwNCLF4eFj8jIVxfP7MfB417gZDIw'
 
     list_response = []
     if request.method == 'POST':
@@ -46,7 +46,7 @@ def webhook(request):
 @csrf_exempt
 def class_progress(request):
     sessions_id = {'MATEMATICAS': 165966, 'EX.  ORAL Y ESCRITA': 165965, 'QUIMICA': 165964, 'TICS': 165963, 'FISICA': 165962, 'BIOLOGIA': 165961, 'GENERO': 173272}
-    token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGFzc29ubGl2ZSIsImRhdGEiOiJ7XCJlbWFpbFwiOlwiaWRtYS5jbGFzc29ubGl2ZUBpZG1hLmNsXCIsXCJpcFwiOlwiMTkwLjExNC4zNS4xNlwifSJ9.s55cKx9dGF4yI3P5Le0KevDLX5GEVVruyKbU5uGRH3M'
+    token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGFzc29ubGl2ZSIsImRhdGEiOiJ7XCJlbWFpbFwiOlwiaWRtYS5jbGFzc29ubGl2ZUBpZG1hLmNsXCIsXCJpcFwiOlwiMjAwLjU0LjM2LjIyNVwifSJ9.UdfJWxV05uzFxILwNCLF4eFj8jIVxfP7MfB417gZDIw'
 
     if request.method == 'POST':
         datas = request.body
@@ -92,6 +92,7 @@ def query(request):
             json_string = json.dumps(results, default=str)
         except Exception as e:
             print("Ocurrió un error al consultar: ", e)
+            json_string = []
         finally:
             cnxn.close()
 
